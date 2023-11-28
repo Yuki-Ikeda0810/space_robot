@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro"
+>
+
+  <xacro:include filename="$(find getit_robot_gazebo)/urdf/chaser/common.xacro" />
+  <xacro:include filename="$(find getit_robot_gazebo)/urdf/chaser/properties.urdf.xacro" />
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+     <robotNamespace>/chaser</robotNamespace>
+    </plugin>
+  </gazebo>
+
+  <xacro:macro name="arm_link1_gazebo" params="name">
+    <gazebo reference="${name}">
+      <material value="Gazebo/Blue"/>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="arm_link2_gazebo" params="name">
+    <gazebo reference="${name}">
+      <material value="Gazebo/Blue"/>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="arm_link3_gazebo" params="name">
+    <gazebo reference="${name}">
+      <material value="Gazebo/Blue"/>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="arm_joint_link_gazebo" params="name">
+    <gazebo reference="${name}">
+      <material value="Gazebo/Grey"/>
+    </gazebo>
+  </xacro:macro>
+
+</robot>

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro"
+>
+  <xacro:include filename="$(find getit_robot_gazebo)/urdf/chaser/common.xacro" />
+  <xacro:include filename="$(find getit_robot_gazebo)/urdf/chaser/properties.urdf.xacro" />
+  <xacro:include filename="$(find getit_robot_gazebo)/urdf/chaser/base/base.gazebo.xacro" />
+  <xacro:include filename="$(find getit_robot_gazebo)/urdf/chaser/base/base.transmission.xacro" />
+  
+  <!-- Base Link -->
+  <xacro:macro name="base" params="name">
+    <!-- <link name="origin"/> -->
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="${base_x_length} ${base_y_length} ${base_z_length}"/>
+        </geometry>
+        <material name="yellow"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="${base_x_length} ${base_y_length} ${base_z_length}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="${base_mass}"/>
+        <origin xyz="0.0 0.0 0.0"/>
+        <inertia ixx="${base_inertia_lx}" ixy="0.0" ixz="0.0"
+             iyy="${base_inertia_ly}" iyz="0.0"
+             izz="${base_inertia_lz}"/>
+      </inertial>
+    </link>
+
+    <xacro:base_link_gazebo name="${name}_link"/>
+
+    <!-- Chaser Controller -->
+    <xacro:chaser_controller robot_name="chaser"/>
+
+    <!-- CoG Pose Publisher -->
+    <xacro:cog_pose_publisher robot_name="chaser" topic_name="${chaser_cog_topic}" link_name="${name}_link"/>
+
+  </xacro:macro>
+</robot>

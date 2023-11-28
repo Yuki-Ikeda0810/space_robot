@@ -1,0 +1,224 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <world name="default">
+
+    <!-- set gravity for zero gravity-->
+    <gravity>0.0 0.0 0.0</gravity>
+
+    <!-- set camera angle when gazebo launched -->
+    <gui>
+      <camera name="camera">
+        <pose>9.4 7.3 11.9 0.0 0.65 -2.4</pose>
+      </camera>
+    </gui>
+
+    <!-- set dynamics engine (default : ode) -->
+    <!-- type : ode, bullet, simbody, dart -->
+    <physics type="dart">
+
+      <!-- time[sec] per 1 step (default : 0.001[s]) -->
+      <max_step_size>0.001</max_step_size>
+
+      <!-- steps per 1[sec] (default : 1000[Hz]) -->
+      <real_time_update_rate>1000</real_time_update_rate>
+
+      <!-- real_time_factor = max_step_size * real_time_update_rate (default : 1) -->
+      <!-- real_time_factor = 1 : real time-->
+      <!-- real_time_factor < 1 : slower than real time -->
+      <!-- <real_time_factor>1</real_time_factor> -->
+
+    </physics>
+
+    <!-- set scene when gazebo launched -->
+    <scene>
+      <grid>false</grid>
+      <ambient>0.7 0.7 0.7 1</ambient>
+      <background>0.1 0.1 0.1 1</background>
+    </scene>
+
+    <!-- set earth model when gazebo launched -->
+    <!-- <model name="earth">
+      <pose>0 0 -50 1.57 0 0</pose>
+      <static>true</static>
+      <link name="earth">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file://worlds/earth/earth.dae</uri>
+              <scale>10 1 10</scale>
+            </mesh>
+          </geometry>
+        </visual>
+      </link>
+    </model> -->
+
+    <!-- include a custom celestial body or background -->
+    <!-- <model name="space_background_xp">
+      <static>true</static>
+      <pose>250 0 0 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>1 500 500</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://worlds/space/stars_milky_way.material</uri>
+              <name>MySpaceTexture</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model> -->
+
+    <!-- include a custom celestial body or background -->
+    <!-- <model name="space_background_xn">
+      <static>true</static>
+      <pose>-250 0 0 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>1 500 500</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://worlds/space/stars_milky_way.material</uri>
+              <name>MySpaceTexture</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model> -->
+
+    <!-- include a custom celestial body or background -->
+    <!-- <model name="space_background_yp">
+      <static>true</static>
+      <pose>0 250 0 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>500 1 500</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://worlds/space/stars_milky_way.material</uri>
+              <name>MySpaceTexture</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model> -->
+
+    <!-- include a custom celestial body or background -->
+    <!-- <model name="space_background_yn">
+      <static>true</static>
+      <pose>0 -250 0 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>500 1 500</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://worlds/space/stars_milky_way.material</uri>
+              <name>MySpaceTexture</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model> -->
+
+    <!-- include a custom celestial body or background -->
+    <!-- <model name="space_background_zp">
+      <static>true</static>
+      <pose>0 0 250 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>500 500 1</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://worlds/space/stars_milky_way.material</uri>
+              <name>MySpaceTexture</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model> -->
+
+    <!-- include a custom celestial body or background -->
+    <!-- <model name="space_background_zn">
+      <static>true</static>
+      <pose>0 0 -250 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>500 500 1</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://worlds/space/stars_milky_way.material</uri>
+              <name>MySpaceTexture</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model> -->
+
+    <light name='directional_light_1' type='directional'>
+      <pose frame=''>0 0 0 0 0 0</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <direction>0.1 0.1 -0.9</direction>
+      <attenuation>
+        <range>20</range>
+        <constant>0.5</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <cast_shadows>1</cast_shadows>
+    </light>
+
+    <light name='directional_light_2' type='directional'>
+      <pose frame=''>0 0 0 0 0 1.57</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <direction>0.1 0.1 -0.9</direction>
+      <attenuation>
+        <range>20</range>
+        <constant>0.5</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <cast_shadows>1</cast_shadows>
+    </light>
+
+    <light name='directional_light_3' type='directional'>
+      <pose frame=''>0 0 0 0 0 -1.57</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <direction>0.1 0.1 -0.9</direction>
+      <attenuation>
+        <range>20</range>
+        <constant>0.5</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <cast_shadows>1</cast_shadows>
+    </light>
+  
+  </world>
+</sdf>

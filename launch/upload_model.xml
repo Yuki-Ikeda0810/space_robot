@@ -1,0 +1,10 @@
+<launch>
+
+  <arg name="model_name" default="chaser/debris_robo_chaser"/>
+  <arg name="robot_name" default="robot_description"/>
+
+  <!-- send table.xml to param server -->
+  <param name="$(arg robot_name)" command="$(find xacro)/xacro $(find getit_robot_gazebo)/urdf/$(arg model_name).xacro" />
+
+</launch>
+

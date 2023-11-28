@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro"
+>
+
+  <!-- Materials -->
+  <xacro:macro name="base_link_gazebo" params="name">
+    <gazebo reference="${name}">
+      <material value="Gazebo/Yellow"/>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- Chaser Controller-->
+  <xacro:macro name="chaser_controller" params="robot_name">
+    <gazebo>
+      <plugin name="chaser_controller" filename="libchaser_controller.so">
+        <robotNamespace>${robot_name}</robotNamespace>
+        <joint1Position>${arm_joint_1_position}</joint1Position>
+        <joint2Position>${arm_joint_2_position}</joint2Position>
+        <joint3Position>${arm_joint_3_position}</joint3Position>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- CoG Pose Publisher-->
+  <xacro:macro name="cog_pose_publisher" params="robot_name topic_name link_name">
+    <gazebo>
+      <plugin name="cog_pose_publisher" filename="libcog_pose_publisher.so">
+        <robotNamespace>${robot_name}</robotNamespace>
+        <topicName>${topic_name}</topicName>
+        <linkName>${link_name}</linkName>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
+  <gazebo>
+    <plugin name="chaser_velocity_controller" filename="libgazebo_ros_velocity.so">
+      <robotNamespace>chaser</robotNamespace>
+      <alwaysOn>true</alwaysOn>
+      <update>100</update>
+      <updateRate>100</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>cmd_vel</topicName>
+    </plugin>
+  </gazebo>
+  
+</robot>

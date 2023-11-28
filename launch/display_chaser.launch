@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- define argument -->
+  <arg name="model" default="$(find getit_robot_gazebo)/urdf/chaser/chaser.urdf.xacro"/>
+  <arg name="gui" default="true"/>
+  <arg name="rvizconfig" default="$(find getit_robot_gazebo)/rviz/urdf.rviz" />
+
+  <!-- load param -->
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+
+  <!-- joint_state_publisher -->
+  <node if="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+  <node unless="$(arg gui)" name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
+  <!-- robot_state_publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <!-- convert joint states to TF transforms for rviz, etc -->
+  <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+    <remap from="/joint_states" to="/chaser/joint_states" />
+  </node> -->
+  
+  <!-- rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+
+</launch>

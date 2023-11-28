@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro"
+>
+
+  <transmission name="tran_1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="arm_joint_1">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <!-- <hardwareInterface>EffortJointInterface</hardwareInterface> -->
+      <mechanicalReduction>1</mechanicalReduction>
+    </joint>
+    <actuator name="motor_1">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <!-- <hardwareInterface>EffortJointInterface</hardwareInterface> -->
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran_2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="arm_joint_2">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <!-- <hardwareInterface>EffortJointInterface</hardwareInterface> -->
+      <mechanicalReduction>1</mechanicalReduction>
+    </joint>
+    <actuator name="motor_2">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <!-- <hardwareInterface>EffortJointInterface</hardwareInterface> -->
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran_3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="arm_joint_3">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <!-- <hardwareInterface>EffortJointInterface</hardwareInterface> -->
+      <mechanicalReduction>1</mechanicalReduction>
+    </joint>
+    <actuator name="motor_3">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <!-- <hardwareInterface>EffortJointInterface</hardwareInterface> -->
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+</robot>

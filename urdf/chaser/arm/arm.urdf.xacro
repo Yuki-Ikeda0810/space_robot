@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro"
+>
+  <!-- include macros -->
+  <xacro:include filename="$(find getit_robot_gazebo)/urdf/chaser/common.xacro" />
+  <xacro:include filename="$(find getit_robot_gazebo)/urdf/chaser/properties.urdf.xacro" />
+  <xacro:include filename="$(find getit_robot_gazebo)/urdf/chaser/arm/arm.gazebo.xacro" />
+  <xacro:include filename="$(find getit_robot_gazebo)/urdf/chaser/arm/arm.transmission.xacro" />
+
+  <!-- include sensors -->
+  <xacro:include filename="$(find getit_robot_gazebo)/urdf/chaser/sensors/ft_sensor.urdf.xacro" />
+
+  <xacro:macro name="arm" params="name parent">
+
+    <!-- arm link -->
+    <xacro:arm_link1 name="${name}_1_link">
+      <origin xyz="${arm_link1_length/2} 0 0" rpy="0 ${pi/2} 0"/>
+    </xacro:arm_link1>
+
+    <xacro:arm_link2 name="${name}_2_link">
+      <origin xyz="${arm_link2_length/2} 0 0" rpy="0 ${pi/2} 0"/>
+    </xacro:arm_link2>
+
+    <xacro:arm_link3 name="${name}_3_link">
+      <origin xyz="${arm_link3_length/2 + arm_joint_link_radius/2} 0 0" rpy="0 ${pi/2} 0"/>
+    </xacro:arm_link3>
+
+    <!-- joints for arm link -->
+    <joint name="${name}_joint_1" type="continuous">
+      <origin xyz="${base_x_length/2} 0 0" rpy="0 0 0"/>
+      <parent link="${parent}"/>
+      <child  link="${name}_1_link"/>
+      <axis xyz="1 0 0"/>
+      <!-- <limit effort="${arm_joint_limit_effort}" velocity="${arm_joint_limit_velocity}"/> -->
+    </joint>
+
+    <joint name="${name}_joint_2" type="revolute">
+      <origin xyz="${arm_link1_length} 0 0" rpy="0 0 0"/>
+      <parent link="${name}_1_link"/>
+      <child  link="${name}_2_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="${arm_joint2_limit_lower}" upper="${arm_joint2_limit_upper}" effort="${arm_joint_limit_effort}" velocity="${arm_joint_limit_velocity}"/>
+    </joint>
+
+    <joint name="${name}_joint_3" type="revolute">
+      <origin xyz="${arm_link2_length} 0 0" rpy="0 0 0"/>
+      <parent link="${name}_2_link"/>
+      <child  link="${name}_3_link"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="${arm_joint3_limit_lower}" upper="${arm_joint3_limit_upper}" effort="${arm_joint_limit_effort}" velocity="${arm_joint_limit_velocity}"/>
+    </joint>
+
+    <!-- visualized joint links -->
+    <xacro:arm_joint_link name="${name}_visualized_joint_1_link">
+      <origin xyz="0 0 0" rpy="0 ${pi/2} 0"/>
+    </xacro:arm_joint_link>
+
+    <xacro:arm_joint_link name="${name}_visualized_joint_2_link">
+      <origin xyz="0 0 0" rpy="0 ${pi} 0"/>
+    </xacro:arm_joint_link>
+
+    <xacro:arm_joint_link name="${name}_visualized_joint_3_link">
+      <origin xyz="0 0 0" rpy="0 ${pi} 0"/>
+    </xacro:arm_joint_link>
+
+    <!-- joints for visualized joint link -->
+    <joint name="${name}_visualized_joint_1" type="fixed">
+      <origin xyz="${base_x_length/2} 0 0" rpy="0 0 0"/>
+      <parent link="${parent}"/>
+      <child  link="${name}_visualized_joint_1_link"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <joint name="${name}_visualized_joint_2" type="fixed">
+      <origin xyz="${arm_link1_length} 0 0" rpy="0 0 0"/>
+      <parent link="${name}_1_link"/>
+      <child  link="${name}_visualized_joint_2_link"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <joint name="${name}_visualized_joint_3" type="fixed">
+      <origin xyz="${arm_link2_length} 0 0" rpy="0 0 0"/>
+      <parent link="${name}_2_link"/>
+      <child  link="${name}_visualized_joint_3_link"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+  </xacro:macro>
+
+  <!-- arm link1 -->
+  <xacro:macro name="arm_link1" params="name *origin">
+
+    <link name="${name}">
+      <visual>
+        <xacro:insert_block name="origin"/>
+        <geometry>
+          <cylinder radius="${arm_link1_radius}" length="${arm_link1_length - arm_joint_link_length/2 - arm_joint_link_radius}"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+      <!-- <collision>
+        <xacro:insert_block name="origin"/>
+        <geometry>
+          <cylinder radius="${arm_link1_radius}" length="${arm_link1_length - arm_joint_link_length/2 - arm_joint_link_radius}"/>
+        </geometry>
+      </collision> -->
+      <inertial>
+        <xacro:insert_block name="origin"/>
+        <mass value="${arm_link1_mass}"/>
+        <inertia ixx="${arm_link1_inertia_lx}" ixy="0" ixz="0"
+                 iyy="${arm_link1_inertia_ly}" iyz="0"
+                 izz="${arm_link1_inertia_lz}"/>
+      </inertial>
+    </link>
+    <xacro:arm_link1_gazebo name="${name}"/>
+
+  </xacro:macro>
+
+  <!-- arm link2 -->
+  <xacro:macro name="arm_link2" params="name *origin">
+
+    <link name="${name}">
+      <visual>
+        <xacro:insert_block name="origin"/>
+        <geometry>
+          <cylinder radius="${arm_link2_radius}" length="${arm_link2_length - 2*arm_joint_link_radius}"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+      <!-- <collision>
+        <xacro:insert_block name="origin"/>
+        <geometry>
+          <cylinder radius="${arm_link2_radius}" length="${arm_link2_length - 2*arm_joint_link_radius}"/>
+        </geometry>
+      </collision> -->
+      <inertial>
+        <xacro:insert_block name="origin"/>
+        <mass value="${arm_link2_mass}"/>
+        <inertia ixx="${arm_link2_inertia_lx}" ixy="0" ixz="0"
+                 iyy="${arm_link2_inertia_ly}" iyz="0"
+                 izz="${arm_link2_inertia_lz}"/>
+      </inertial>
+    </link>
+    <xacro:arm_link2_gazebo name="${name}"/>
+
+  </xacro:macro>
+
+  <!-- arm link3 -->
+  <xacro:macro name="arm_link3" params="name *origin">
+
+    <link name="${name}">
+      <visual>
+        <xacro:insert_block name="origin"/>
+        <geometry>
+          <cylinder radius="${arm_link3_radius}" length="${arm_link3_length - arm_joint_link_radius}"/>
+        </geometry>
+        <material name="blue"/>
+      </visual>
+      <!-- <collision>
+        <xacro:insert_block name="origin"/>
+        <geometry>
+          <cylinder radius="${arm_link3_radius}" length="${arm_link3_length - arm_joint_link_radius}"/>
+        </geometry>
+      </collision> -->
+      <inertial>
+        <xacro:insert_block name="origin"/>
+        <mass value="${arm_link3_mass}"/>
+        <inertia ixx="${arm_link3_inertia_lx}" ixy="0" ixz="0"
+                 iyy="${arm_link3_inertia_ly}" iyz="0"
+                 izz="${arm_link3_inertia_lz}"/>
+      </inertial>
+    </link>
+    <xacro:arm_link3_gazebo name="${name}"/>
+
+  </xacro:macro>
+
+  <!-- visualized joint link -->
+  <xacro:macro name="arm_joint_link" params="name *origin">
+
+    <link name="${name}">
+      <visual>
+        <xacro:insert_block name="origin" />
+        <geometry>
+          <cylinder radius="${arm_joint_link_radius}" length="${arm_joint_link_length}"/>
+        </geometry>
+        <material name="gray"/>
+      </visual>
+      <!-- <collision>
+        <xacro:insert_block name="origin" />
+        <geometry>
+          <cylinder radius="${arm_joint_link_radius}" length="${arm_joint_link_length}"/>
+        </geometry>
+      </collision> -->
+    </link>
+    <xacro:arm_joint_link_gazebo name="${name}"/>
+    
+  </xacro:macro>
+
+</robot>
+

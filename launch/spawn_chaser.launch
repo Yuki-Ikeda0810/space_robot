@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+
+  <param name="/use_sim_time" value="true" />
+
+  <arg name="paused" default="false"/>
+  <arg name="verbose" default="true"/> <!-- Output detailed message of Gazebo -->
+
+  <!-- start Gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch" >
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="verbose" value="$(arg verbose)"/>
+    <arg name="world_name" value="$(find getit_robot_gazebo)/worlds/empty_nogravity.world"/>
+  </include>
+
+  <!-- Load model description: chaser -->
+  <include file="$(find getit_robot_gazebo)/launch/upload_model.xml">
+	  <arg name="model_name" value="chaser/chaser.urdf"/>
+  </include>
+
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+  <node name="spawn_chaser" pkg="gazebo_ros" type="spawn_model" args="-urdf -x 0.0 -y 0.0 -z 5.0 -R 0.0 -P 0.0 -Y 0.0 -param robot_description -model chaser" respawn="false" output="screen"/>
+
+  <!-- ros_control for arm -->
+  <include file="$(find getit_robot_gazebo)/launch/ros_control.launch"/>
+
+</launch>
+

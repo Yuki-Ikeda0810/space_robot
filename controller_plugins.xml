@@ -1,0 +1,11 @@
+<library path="lib/libjoint_multi_controller">
+  <!-- <class name="effort_controllers/JointMultiController" 
+         type="chaser::JointMultiController"           
+         base_class_type="controller_interface::ControllerBase"> -->
+  <class name="velocity_controllers/JointMultiController" 
+         type="chaser::JointMultiController"           
+         base_class_type="controller_interface::ControllerBase">
+      <description>This is a JointMultiController plugin.</description>
+  </class>
+</library>
+

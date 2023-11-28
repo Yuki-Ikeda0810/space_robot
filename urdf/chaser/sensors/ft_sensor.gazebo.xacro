@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro"
+>
+
+  <!-- FT Sensor -->
+  <xacro:macro name="ft_sensor" params="name topic_name">
+    <gazebo>
+      <plugin name="${name}_FTS" filename="libgazebo_ros_f3d.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>1000.0</updateRate>
+        <bodyName>${name}</bodyName>
+        <topicName>${topic_name}</topicName>
+        <frameName>${name}</frameName>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
+</robot>
